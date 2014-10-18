@@ -1,0 +1,79 @@
+<?php
+// Scans my music collection to generate sample data. Not really part of the
+// project, but it should be helpful.
+//
+// Only scans FLAC files.
+
+define('MUSIC_DIR', '/media/Music');
+$mysql = new mysqli('localhost', 'testuser', 'testuser', 'musicdb');
+
+$data = array();
+$artistid = 2; // 1 = various artists
+$albumid = 1;
+$trackid = 1;
+
+function escape($str)
+{
+	return str_replace(array('\'', ';'), array('\'\'', ''), $str);
+}
+
+function handleFile($file)
+{
+	global $mysql, $data, $artistid, $albumid, $trackid;
+
+	$cmdfile = "\"$file\"";
+	$out = shell_exec('metaflac --list --block-type=VORBIS_COMMENT '.$cmdfile);
+	$lengthinfo = explode("\n", shell_exec('metaflac --show-total-samples --show-sample-rate '.$cmdfile));
+	$length = $lengthinfo[0]/$lengthinfo[1];
+	$length = (int)((int)$length/3600).':'.(int)(((int)$length%3600)/60).':'.((int)$length%60);
+
+	$meta = array();
+	preg_match_all('/    comment\[[0-9]+\]: ([A-Z]+)=(.*)/', $out, $vorbis);
+	for($i = 0;$i < count($vorbis[1]);++$i)
+		$meta[$vorbis[1][$i]] = $vorbis[2][$i];
+
+	if(!isset($meta['ARTIST']) || !isset($meta['ALBUM']) || !isset($meta['TITLE']))
+		return;
+
+	if(isset($meta['DATE']))
+		$meta['YEAR'] = $meta['DATE'];
+
+	if(!isset($data[$meta['ARTIST']]))
+	{
+		$data[$meta['ARTIST']] = array('id' => $artistid++, 'albums' => array());
+		echo 'INSERT INTO artists (name) VALUES (\''.escape($meta['ARTIST'])."');\n";
+	}
+
+	if(!isset($data[$meta['ARTIST']]['albums'][$meta['ALBUM']]))
+	{
+		$data[$meta['ARTIST']]['albums'][$meta['ALBUM']] = array('id' => $albumid++, 'tracks' => array());
+		$date = isset($meta['YEAR']) && !empty($meta['YEAR']) ? '\''.$meta['YEAR'].'-01-01\'' : 'NULL';
+		echo 'INSERT INTO albums (artist_id, title, year) VALUES ('.$data[$meta['ARTIST']]['id'].', \''.escape($meta['ALBUM']).'\', '.$date.");\n";
+	}
+	$data[$meta['ARTIST']]['albums'][$meta['ALBUM']]['tracks'][$meta['TRACKNUMBER'].$meta['TITLE']] = $trackid++;
+	echo 'INSERT INTO tracks (artist_id, album_id, number, title, length) VALUES ('.$data[$meta['ARTIST']]['id'].', '.$data[$meta['ARTIST']]['albums'][$meta['ALBUM']]['id'].', '.(int)$meta['TRACKNUMBER'].', \''.escape($meta['TITLE']).'\', \''.$length."');\n";
+}
+
+function scan($dir)
+{
+	$handle = opendir($dir);
+	while(($file = readdir($handle)) !== false)
+	{
+		if($file[0] == '.')
+			continue;
+
+		$fname = $dir.'/'.$file;
+		if(is_dir($fname))
+			scan($fname);
+		else
+		{
+			if(strpos($file, '.flac') == strlen($file)-5)
+				handleFile($fname);
+		}
+	}
+}
+
+scan(MUSIC_DIR);
+
+$mysql->close();
+
