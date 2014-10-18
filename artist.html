@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 <body>
+
+
 
 <h1>Artists</h1>
 
@@ -10,6 +15,18 @@
   <input type="radio" name="actionButton" value="removeArtist">Remove an artist
   <input type="radio" name="actionButton" value="editArtist">Edit an artist
 </form>
+
+<form id="viewArtist" action="viewartist.php">
+  Artist name: <input type="text" name="artistname">
+  <input type="submit">
+</form>
+
+<form id="addArtist" action="addartist.php">
+  Artist name: <input type="text" name="artistname">
+  <input type="submit">
+</form>
+
+
 
 
 <?php
