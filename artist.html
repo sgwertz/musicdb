@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Artists</h1>
+
+<form action="">
+  <input type="radio" name="actionButton" value="viewArtist">View an artist
+  <input type="radio" name="actionButton" value="addArtist">Add an artist
+  <input type="radio" name="actionButton" value="removeArtist">Remove an artist
+  <input type="radio" name="actionButton" value="editArtist">Edit an artist
+</form>
+
+
+<?php
+// Open connection
+$con=mysqli_connect("winremote1.cs.uakron.edu","foo","bar","musicDB");
+
+// Check connection
+if (mysqli_connect_errno()) {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+
+
+
+
+
+
+
+
+
+?>
+
+
+</body>
+</html>
