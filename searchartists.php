@@ -1,17 +1,15 @@
 <?php
 $con=mysqli_connect("localhost","root","","musicDB");
-// Open connection
+// Check connection
 if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$result = mysqli_query($con,"SELECT artistname FROM Artist");
+$result = mysqli_query($con,"SELECT id FROM Artist WHERE name = 'artistname'");
 
-//Show albums?
-while($artist = mysqli_fetch_array($result)) {
-  echo $row['artistname'];
+  echo $row['name'];
   echo "<br>";
-}
+
 
 mysqli_close($con);
 ?>

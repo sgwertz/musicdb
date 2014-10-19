@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Artists</title>
 </head>
 <body>
 
@@ -9,45 +9,15 @@
 
 <h1>Artists</h1>
 
-<form action="">
-  <input type="radio" name="actionButton" value="viewArtist">View an artist
-  <input type="radio" name="actionButton" value="addArtist">Add an artist
-  <input type="radio" name="actionButton" value="removeArtist">Remove an artist
-  <input type="radio" name="actionButton" value="editArtist">Edit an artist
-</form>
-
-<form id="viewArtist" action="viewartist.php">
-  Artist name: <input type="text" name="artistname">
-  <input type="submit">
-</form>
-
-<form id="addArtist" action="addartist.php">
-  Artist name: <input type="text" name="artistname">
-  <input type="submit">
-</form>
-
-
-
-
-<?php
-// Open connection
-$con=mysqli_connect("winremote1.cs.uakron.edu","foo","bar","musicDB");
-
-// Check connection
-if (mysqli_connect_errno()) {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
-
-
-
-
-
-
-
-
-
-?>
-
+<a href="viewartist.html">View Artist</a>
+<br />
+<a href="addartist.html">Add an Artist</a>
+<br />
+<a href="modartist.html">Modify an Artist</a>
+<br />
+<a href="delartist.html">Delete an Artist</a>
+<br />
+<a href="searchartists.html">Search Artists</a>
 
 </body>
 </html>
