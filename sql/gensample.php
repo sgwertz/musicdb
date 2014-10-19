@@ -5,7 +5,7 @@
 // Only scans FLAC files.
 
 define('MUSIC_DIR', '/media/Music');
-$mysql = new mysqli('localhost', 'testuser', 'testuser', 'musicdb');
+$mysql = new mysqli('localhost', 'root', '', 'musicDB');
 
 $data = array();
 $artistid = 2; // 1 = various artists
@@ -76,4 +76,3 @@ function scan($dir)
 scan(MUSIC_DIR);
 
 $mysql->close();
-
