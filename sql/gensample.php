@@ -5,9 +5,8 @@
 // Only scans FLAC files.
 
 define('MUSIC_DIR', '/media/Music');
-$mysql = new mysqli('localhost', 'root', '', 'musicDB');
 
-$data = array();
+$data = array('Various Artists' => array('id' => 1, 'albums' => array()));
 $artistid = 2; // 1 = various artists
 $albumid = 1;
 $trackid = 1;
@@ -19,7 +18,9 @@ function escape($str)
 
 function handleFile($file)
 {
-	global $mysql, $data, $artistid, $albumid, $trackid;
+	global $data, $artistid, $albumid, $trackid;
+
+	$isVA = strpos($file, MUSIC_DIR.'/Various') === 0;
 
 	$cmdfile = "\"$file\"";
 	$out = shell_exec('metaflac --list --block-type=VORBIS_COMMENT '.$cmdfile);
@@ -44,14 +45,15 @@ function handleFile($file)
 		echo 'INSERT INTO artists (name) VALUES (\''.escape($meta['ARTIST'])."');\n";
 	}
 
-	if(!isset($data[$meta['ARTIST']]['albums'][$meta['ALBUM']]))
+	$albumArtist = $isVA ? 'Various Artists' : $meta['ARTIST']; 
+	if(!isset($data[$albumArtist]['albums'][$meta['ALBUM']]))
 	{
-		$data[$meta['ARTIST']]['albums'][$meta['ALBUM']] = array('id' => $albumid++, 'tracks' => array());
+		$data[$albumArtist]['albums'][$meta['ALBUM']] = array('id' => $albumid++, 'tracks' => array());
 		$date = isset($meta['YEAR']) && !empty($meta['YEAR']) ? '\''.$meta['YEAR'].'-01-01\'' : 'NULL';
-		echo 'INSERT INTO albums (artist_id, title, year) VALUES ('.$data[$meta['ARTIST']]['id'].', \''.escape($meta['ALBUM']).'\', '.$date.");\n";
+		echo 'INSERT INTO albums (artist_id, title, year) VALUES ('.$data[$albumArtist]['id'].', \''.escape($meta['ALBUM']).'\', '.$date.");\n";
 	}
 	$data[$meta['ARTIST']]['albums'][$meta['ALBUM']]['tracks'][$meta['TRACKNUMBER'].$meta['TITLE']] = $trackid++;
-	echo 'INSERT INTO tracks (artist_id, album_id, number, title, length) VALUES ('.$data[$meta['ARTIST']]['id'].', '.$data[$meta['ARTIST']]['albums'][$meta['ALBUM']]['id'].', '.(int)$meta['TRACKNUMBER'].', \''.escape($meta['TITLE']).'\', \''.$length."');\n";
+	echo 'INSERT INTO tracks (artist_id, album_id, number, title, length) VALUES ('.$data[$meta['ARTIST']]['id'].', '.$data[$albumArtist]['albums'][$meta['ALBUM']]['id'].', '.(int)$meta['TRACKNUMBER'].', \''.escape($meta['TITLE']).'\', \''.$length."');\n";
 }
 
 function scan($dir)
@@ -74,5 +76,3 @@ function scan($dir)
 }
 
 scan(MUSIC_DIR);
-
-$mysql->close();
