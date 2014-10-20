@@ -1,5 +1,6 @@
 <?php
-$con=mysqli_connect("localhost","root","","musicDB");
+require '../sql/config.php';
+$con=mysqli_connect($dbserv,$dbuser,$dbpass,$dbbase);
 // Open connection
 if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();

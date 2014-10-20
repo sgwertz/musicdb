@@ -1,24 +1,23 @@
 <?php
-$con=mysqli_connect("localhost","root","","musicDB");
+require '../sql/config.php';
+$con=mysqli_connect($dbserv,$dbuser,$dbpass,$dbbase);
 // Check connection
 if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$albums = mysqli_query($con,"SELECT title, year FROM albums WHERE artist_id =
-(SELECT id FROM artists WHERE name = 'artistname')");
+$albums = mysqli_query($con,"SELECT id, name FROM artists WHERE name LIKE
+'%{$_GET['artistname']}%' ORDER BY name ASC") or die('Query error: '.mysqli_error($con));
 
 echo "<table border='1'>
 <tr>
-<th>Title</th>
-<th>Year</th>
+<th>Name</th>
 </tr>";
 
 
 while($row = mysqli_fetch_array($albums)) {
   echo "<tr>";
-  echo "<td>" . $row['title'] . "</td>";
-  echo "<td>" . $row['year'] . "</td>";
+  echo "<td><a href=\"viewartistsbyID.php?id={$row['id']}\">{$row['name']}</a></td>";
   echo "</tr>";
 }
 
