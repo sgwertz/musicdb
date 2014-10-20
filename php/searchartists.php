@@ -17,7 +17,7 @@ echo "<table border='1'>
 
 while($row = mysqli_fetch_array($albums)) {
   echo "<tr>";
-  echo "<td><a href=\"viewartistsbyID.php?id={$row['id']}\">{$row['name']}</a></td>";
+  echo "<td><a href=\"viewalbumsbyArtist.php?artistid={$row['id']}\">{$row['name']}</a></td>";
   echo "</tr>";
 }
 
