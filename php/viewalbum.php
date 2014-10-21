@@ -41,7 +41,7 @@ while($row = mysqli_fetch_array($result)) {
   echo "</tr>";
 }
 
-echo "</table>";
+echo "</table><a href=\"/deltrack.php?albumid={$_GET['albumid']}\">Delete track</a> <a href=\"/addtrack.php?albumid={$_GET['albumid']}\">Add track</a>";
 
 require 'footer.php';
 ?>
