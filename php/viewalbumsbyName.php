@@ -17,7 +17,7 @@ echo "<table border='1'>
 
 while($row = mysqli_fetch_array($result)) {
   echo "<tr>";
-  echo "<td>" . $row['title'] . "</td>";
+  echo "<td><a href=\"viewalbum.php?albumid={$row['id']}\">{$row['title']}</a></td>";
   echo "<td>" . $row['year'] . "</td>";
   echo "</tr>";
 }

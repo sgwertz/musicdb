@@ -6,7 +6,8 @@ if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$sql=mysqli_query($con, "UPDATE artists SET name = {$_GET['correctName']} WHERE name = {$_GET['originalName']}");
+$sql=mysqli_query($con, "UPDATE artists SET name = '{$_GET['correctName']}' WHERE name = '{$_GET['originalName']}'")
+  or die('Query error: '.mysqli_error($con));
 
 echo "Artist modified";
 
