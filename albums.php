@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Albums</title>
-</head>
-<body>
-
+<?php
+$title = 'Albums';
+require 'php/header.php';
+?>
 
 
 <h1>Albums</h1>
 
-<a href="viewalbums.html">View Album</a>
+<a href="viewalbums.php">View Album</a>
 <br />
-<a href="addalbum.html">Add an Album</a>
+<a href="addalbum.php">Add an Album</a>
 <br />
-<a href="modalbum.html">Modify an Album</a>
+<a href="modalbum.php">Modify an Album</a>
 <br />
-<a href="delalbum.html">Delete an Album</a>
+<a href="delalbum.php">Delete an Album</a>
 <br />
-<a href="searchalbums.html">Search Albums</a>
+<a href="searchalbums.php">Search Albums</a>
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

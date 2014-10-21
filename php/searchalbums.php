@@ -1,10 +1,6 @@
 <?php
-require '../sql/config.php';
-$con=mysqli_connect($dbserv,$dbuser,$dbpass,$dbbase);
-// Check connection
-if (mysqli_connect_errno()) {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+$title = 'Albums';
+require 'header.php';
 
 $albums = mysqli_query($con,"SELECT * FROM albums WHERE title LIKE
 '%{$_GET['albumname']}%'") or die('Query error: '.mysqli_error($con));
@@ -23,5 +19,5 @@ while($row = mysqli_fetch_array($albums)) {
 
 echo "</table>";
 
-mysqli_close($con);
+require 'footer.php';
 ?>

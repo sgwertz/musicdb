@@ -1,10 +1,6 @@
 <?php
-require '../sql/config.php';
-$con=mysqli_connect($dbserv,$dbuser,$dbpass,$dbbase);
-// Open connection
-if (mysqli_connect_errno()) {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+$title = 'Album';
+require 'header.php';
 
 $result = mysqli_query($con,"SELECT count(distinct(artist_id)) AS numartists
 FROM tracks WHERE album_id = {$_GET['albumid']}")
@@ -47,6 +43,6 @@ while($row = mysqli_fetch_array($result)) {
 
 echo "</table>";
 
-mysqli_close($con);
+require 'footer.php';
 ?>
  

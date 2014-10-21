@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Artists</title>
-</head>
-<body>
+<?php
+$title = 'Artists';
+require 'php/header.php';
+?>
 
 <h1>Delete An Artist</h1>
 
@@ -12,5 +10,5 @@
   <input type="submit">
 </form>
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

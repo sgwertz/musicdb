@@ -1,10 +1,6 @@
 <?php
-require '../sql/config.php';
-$con=mysqli_connect($dbserv,$dbuser,$dbpass,$dbbase);
-// Open connection
-if (mysqli_connect_errno()) {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+$title = 'Albums';
+require 'header.php';
 
 $result = mysqli_query($con,"SELECT * FROM albums WHERE artist_id =
 {$_GET['artistid']} OR id IN (SELECT album_id AS id FROM tracks WHERE
@@ -27,6 +23,6 @@ while($row = mysqli_fetch_array($result)) {
 
 echo "</table>";
 
-mysqli_close($con);
+require 'footer.php';
 ?>
  

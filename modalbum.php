@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Album</title>
-</head>
-<body>
+<?php
+$title = 'Album';
+require 'php/header.php';
+?>
 
 <h1>Modify Album</h1>
 -Please select the album name and then below insert the corrected name-
@@ -15,5 +13,5 @@
 </form>
 
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

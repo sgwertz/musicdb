@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Albums</title>
-</head>
-<body>
+<?php
+$title = 'Albums';
+require 'php/header.php';
+?>
 
 <h1>Search Albums</h1>
 

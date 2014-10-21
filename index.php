@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html>
-<body>
+<?php
+require 'php/header.php';
+?>
 
 <h1>MuzakDB</h1>
 
-<a href="artists.html">Artists</a>
+<a href="artists.php">Artists</a>
 <br />
-<a href="albums.html">Albums</a>
+<a href="albums.php">Albums</a>
 
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

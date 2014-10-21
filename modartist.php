@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Artist</title>
-</head>
-<body>
+<?php
+$title = 'Artist';
+require 'php/header.php';
+?>
 
 <h1>Modify Artist</h1>
 -Please select the artist name and then below insert the corrected name-
@@ -15,5 +13,5 @@
 </form>
 
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Albums</title>
-</head>
-<body>
+<?php
+$title = 'Albums';
+require 'php/header.php';
+?>
 
 <h1>View Albums</h1>
 
@@ -13,5 +11,5 @@
 <br />
 <a href="/php/viewalbumsbyYear.php">View Albums by Year</a>
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

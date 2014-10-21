@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Artists</title>
-</head>
-<body>
+<?php
+$title = 'Artists';
+require 'php/header.php';
+?>
 
 <h1>View Artists</h1>
 
@@ -11,5 +9,5 @@
 <br />
 <a href="/php/viewartistsbyID.php">View Artists by ID</a>
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

@@ -10,5 +10,6 @@ if (mysqli_connect_errno()) {
 <html>
 <head>
 <title><?php echo isset($title) ? $title : 'MuzakDB'; ?></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>

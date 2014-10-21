@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Albums</title>
-</head>
-<body>
+<?php
+$title = 'Albums';
+require 'php/header.php';
+?>
 
 <h1>Add An Album</h1>
 
@@ -14,5 +12,5 @@
   <input type="submit">
 </form>
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

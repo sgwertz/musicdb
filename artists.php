@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Artists</title>
-</head>
-<body>
-
+<?php
+$title = 'Artists';
+require 'php/header.php';
+?>
 
 
 <h1>Artists</h1>
 
-<a href="viewartist.html">View Artists</a>
+<a href="viewartist.php">View Artists</a>
 <br />
-<a href="addartist.html">Add an Artist</a>
+<a href="addartist.php">Add an Artist</a>
 <br />
-<a href="modartist.html">Modify an Artist</a>
+<a href="modartist.php">Modify an Artist</a>
 <br />
-<a href="delartist.html">Delete an Artist</a>
+<a href="delartist.php">Delete an Artist</a>
 <br />
-<a href="searchartists.html">Search Artists</a>
+<a href="searchartists.php">Search Artists</a>
 
-</body>
-</html>
+<?php
+require 'php/footer.php';

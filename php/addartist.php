@@ -1,10 +1,6 @@
 <?php
-require '../sql/config.php';
-$con=mysqli_connect($dbserv,$dbuser,$dbpass,$dbbase);
-// Check connection
-if (mysqli_connect_errno()) {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+$title = 'Artist';
+require 'header.php';
 
 // escape variables for security
 $artistname = mysqli_real_escape_string($con, $_POST['artistname']);
@@ -16,5 +12,5 @@ if (!mysqli_query($con,$sql)) {
 }
 echo "Artist added";
 
-mysqli_close($con);
+require 'footer.php';
 ?>
