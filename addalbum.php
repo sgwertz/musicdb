@@ -1,18 +1,18 @@
-<?php
-require 'sql/config.php';
-$con=mysqli_connect($dbserv,$dbuser,$dbpass,$dbbase);
-// Check connection
-if (mysqli_connect_errno()) {
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Albums</title>
+</head>
+<body>
 
-$sql="INSERT INTO albums (artist_id, title, year) VALUES ((SELECT id FROM artists
-WHERE id = {$_GET['artistname']}), {$_GET['albumname']}, {$_GET['year']})";
+<h1>Add An Album</h1>
 
-if (!mysqli_query($con,$sql)) {
-  die('Error: ' . mysqli_error($con));
-}
-echo "Album added";
+<form id="addAlbum" method="get" action="/php/addalbum.php">
+  Artist name: <input type="text" name="artistname">
+  Album name: <input type="text" name="albumname">
+  Year: <input type="text" name="year">
+  <input type="submit">
+</form>
 
-mysqli_close($con);
-?>
+</body>
+</html>
