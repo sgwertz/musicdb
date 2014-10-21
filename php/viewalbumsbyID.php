@@ -2,7 +2,7 @@
 $title = 'Albums';
 require 'header.php';
 
-$result = mysqli_query($con,"SELECT * FROM albums ORDER BY id ASC");
+$result = mysqli_query($con,"SELECT id, title, YEAR(year) AS year FROM albums ORDER BY id ASC");
 
 echo "<table border='1'>
 <tr>

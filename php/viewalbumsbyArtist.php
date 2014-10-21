@@ -2,7 +2,7 @@
 $title = 'Albums';
 require 'header.php';
 
-$result = mysqli_query($con,"SELECT * FROM albums WHERE artist_id =
+$result = mysqli_query($con,"SELECT id, title, YEAR(year) AS year FROM albums WHERE artist_id =
 {$_GET['artistid']} OR id IN (SELECT album_id AS id FROM tracks WHERE
 artist_id = {$_GET['artistid']}) ORDER BY year ASC")
   or die('Query error: '.mysqli_error($con));
