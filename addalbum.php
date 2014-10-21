@@ -6,11 +6,8 @@ if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-$artistID = mysqli_query($con,"SELECT id FROM artist WHERE name = 'artistname'");
-$albumName = mysqli_real_escape_string($con, $_POST['albumname']);
-$year = mysqli_real_escape_string($con, $_POST['year']);
-
-$sql="INSERT INTO albums VALUES ($artistID, $albumname, $year);
+$sql="INSERT INTO albums (artist_id, title, year) VALUES ((SELECT id FROM artists
+WHERE id = {$_GET['artistname']}), {$_GET['albumname']}, {$_GET['year']})";
 
 if (!mysqli_query($con,$sql)) {
   die('Error: ' . mysqli_error($con));
