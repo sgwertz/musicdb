@@ -47,7 +47,8 @@ CREATE TABLE users (
 	id int AUTO_INCREMENT,
 	name varchar(64) NOT NULL,
 	password char(64) NOT NULL,
-	PRIMARY KEY(id)
+	PRIMARY KEY(id),
+	UNIQUE KEY (name)
 );
 
 CREATE TABLE collections (

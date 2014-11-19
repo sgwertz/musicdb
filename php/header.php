@@ -4,7 +4,9 @@ $con=mysqli_connect($dbserv,$dbuser,$dbpass,$dbbase);
 // Check connection
 if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
-} 
+}
+
+require_once dirname(__FILE__).'/usersapi.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,9 +54,30 @@ html, body { padding: 0; margin: 0; }
 <body>
 <div class="head">
 <h1>MuzakDB</h1>
-<ul>
+<ul style="display: inline">
 	<li><a href="/artists.php">Artists</a></li>
 	<li><a href="/albums.php">Albums</a></li>
+<?php
+if(loggedin()) {
+?>
+	<li><a href="?logout">Logout</a></li>
+	<li><?php echo getuser()['name']; ?></li>
+<?php
+}
+?>
 </ul>
+<?php
+if(!loggedin()) {
+?>
+<form style="display: inline;margin: 10px" action="#" method="post">
+<label for="username">User</label><input type="text" name="username" id="username" size="5" />
+<label for="password">Pass</label><input type="password" name="password" id="password" size="5" />
+<input type="submit" name="login" value="login" />
+<input type="submit" name="register" value="register" />
+</form>
+<?php
+if($loginError) echo $loginError;
+}
+?>
 </div>
 <div class="content">
