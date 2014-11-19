@@ -10,6 +10,7 @@ $data = array('Various Artists' => array('id' => 1, 'albums' => array()));
 $artistid = 2; // 1 = various artists
 $albumid = 1;
 $trackid = 1;
+$releaseid = 1;
 
 function escape($str)
 {
@@ -18,7 +19,7 @@ function escape($str)
 
 function handleFile($file)
 {
-	global $data, $artistid, $albumid, $trackid;
+	global $data, $artistid, $albumid, $releaseid, $trackid;
 
 	$isVA = strpos($file, MUSIC_DIR.'/Various') === 0;
 
@@ -48,12 +49,13 @@ function handleFile($file)
 	$albumArtist = $isVA ? 'Various Artists' : $meta['ARTIST']; 
 	if(!isset($data[$albumArtist]['albums'][$meta['ALBUM']]))
 	{
-		$data[$albumArtist]['albums'][$meta['ALBUM']] = array('id' => $albumid++, 'tracks' => array());
+		$data[$albumArtist]['albums'][$meta['ALBUM']] = array('id' => $albumid++, 'rid' => $releaseid++, 'tracks' => array());
 		$date = isset($meta['YEAR']) && !empty($meta['YEAR']) ? '\''.$meta['YEAR'].'-01-01\'' : 'NULL';
 		echo 'INSERT INTO albums (artist_id, title, year) VALUES ('.$data[$albumArtist]['id'].', \''.escape($meta['ALBUM']).'\', '.$date.");\n";
+		echo 'INSERT INTO releases (album_id, description, year) VALUES ('.$data[$albumArtist]['albums'][$meta['ALBUM']]['id'].', \'Standard CD\', '.$date.");\n";
 	}
 	$data[$meta['ARTIST']]['albums'][$meta['ALBUM']]['tracks'][$meta['TRACKNUMBER'].$meta['TITLE']] = $trackid++;
-	echo 'INSERT INTO tracks (artist_id, album_id, number, title, length) VALUES ('.$data[$meta['ARTIST']]['id'].', '.$data[$albumArtist]['albums'][$meta['ALBUM']]['id'].', '.(int)$meta['TRACKNUMBER'].', \''.escape($meta['TITLE']).'\', \''.$length."');\n";
+	echo 'INSERT INTO tracks (artist_id, album_id, release_id, number, title, length) VALUES ('.$data[$meta['ARTIST']]['id'].', '.$data[$albumArtist]['albums'][$meta['ALBUM']]['id'].', '.$data[$albumArtist]['albums'][$meta['ALBUM']]['rid'].', '.(int)$meta['TRACKNUMBER'].', \''.escape($meta['TITLE']).'\', \''.$length."');\n";
 }
 
 function scan($dir)
