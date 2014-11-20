@@ -60,6 +60,7 @@ html, body { padding: 0; margin: 0; }
 <?php
 if(loggedin()) {
 ?>
+	<li><a href="/php/viewcollection.php">My Collection</a></li>
 	<li><a href="?logout">Logout</a></li>
 	<li><?php echo getuser()['name']; ?></li>
 <?php
