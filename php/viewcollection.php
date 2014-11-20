@@ -2,6 +2,21 @@
 require 'header.php';
 
 $uid = getuser()['id'];
+
+// Handling deletes/adds here for now.
+if(isset($_GET['delete']))
+{
+	$sql = "DELETE FROM collections WHERE owner_id = $uid AND release_id IN (SELECT id FROM releases WHERE album_id = {$_GET['delete']})";
+	if(!mysqli_query($con, $sql))
+		die('Query error: '.mysqli_error($con));
+}
+if(isset($_GET['add']))
+{
+	$sql = "INSERT INTO collections (owner_id, release_id) VALUES ($uid, (SELECT id FROM releases WHERE album_id IN (SELECT id FROM albums WHERE title = '{$_GET['album']}' AND artist_id = (SELECT id FROM artists WHERE name = '{$_GET['artist']}'))))";
+	if(!mysqli_query($con, $sql))
+		die('Query error: '.mysqli_error($con));
+}
+
 $sql = "SELECT album_id, releases.id AS release_id, artist_id, description, artists.name AS name, albums.title AS title, YEAR(releases.year) AS year ".
        "FROM releases INNER JOIN albums ON albums.id = releases.album_id INNER JOIN artists ON artists.id = albums.artist_id ".
        "WHERE releases.id IN (SELECT release_id FROM collections WHERE owner_id = $uid) ORDER BY artists.name, releases.year ASC";
@@ -41,7 +56,7 @@ while(($row = mysqli_fetch_assoc($result)))
 			while(($r = mysqli_fetch_assoc($result2)))
 			{
 				if($r['have'])
-					echo "<tr style=\"background-color: #00DD00\">";
+					echo "<tr style=\"background-color: #AAFFAA\">";
 				else
 					echo "<tr>";
 				echo "<td><a href=\"viewalbum.php?albumid={$r['album_id']}\">{$r['album_title']}</a></td><td>{$r['title']}</td><td>{$r['length']}</tr>";
@@ -51,7 +66,7 @@ while(($row = mysqli_fetch_assoc($result)))
 		mysqli_free_result($result2);
 	}
 
-	echo "<h2>{$row['year']} - <a href=\"viewalbum.php?albumid={$row['album_id']}\">{$row['title']}</a></h2>";
+	echo "<h2>{$row['year']} - <a href=\"viewalbum.php?albumid={$row['album_id']}\">{$row['title']}</a> <a href=\"?delete={$row['album_id']}\" style=\"font-size: 50%\">[delete]</a></h2>";
 
 	$sql = "SELECT id, description FROM releases WHERE album_id = {$row['album_id']} AND id NOT IN (SELECT release_id FROM collections WHERE owner_id = $uid)";
 	if(!($result2 = mysqli_query($con, $sql)))
@@ -77,4 +92,11 @@ if($last_artistid != -1)
 
 mysqli_free_result($result);
 
+?>
+<form method="get" action="#">
+Artist: <input type="text" name="artist" />
+Album: <input type="text" name="album" />
+<input type="submit" value="Add" name="add" />
+</form>
+<?php
 require 'footer.php';
