@@ -10,6 +10,8 @@ require 'php/header.php';
 <a href="/php/viewalbumsbyID.php">View Albums by ID</a>
 <br />
 <a href="/php/viewalbumsbyYear.php">View Albums by Year</a>
+<br />
+<a href="/php.viewartistsbyCol.php">View Albums in Collection</a>
 
 <?php
 require 'php/footer.php';

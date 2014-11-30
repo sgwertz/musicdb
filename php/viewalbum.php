@@ -42,6 +42,31 @@ while($row = mysqli_fetch_array($result)) {
 }
 
 echo "</table><a href=\"/deltrack.php?albumid={$_GET['albumid']}\">Delete track</a> <a href=\"/addtrack.php?albumid={$_GET['albumid']}\">Add track</a>";
+echo "  <a href=\"/addrelease.php?albumid={$_GET['albumid']}\">Add release</a>";
+
+$result = mysqli_query($con,"SELECT * FROM releases WHERE album_id = '{$_GET['albumid']}'")
+  or die('Query error: '.mysqli_error($con));
+
+echo "<br />
+      <h3>Releases</h3>
+      <table border='1'>
+      <tr>
+      <th>Date</th><th>Description</th>";
+while($row = mysqli_fetch_array($result)) {
+  echo "<tr>";
+  echo "<td>{$row['year']}</td>";
+  echo "<td>{$row['description']}</td>";
+
+  echo "</tr>";
+  
+
+
+
+
+}
+
+
+
 
 require 'footer.php';
 ?>

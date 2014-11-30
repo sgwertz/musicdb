@@ -8,6 +8,8 @@ require 'php/header.php';
 <a href="/php/viewartistsbyName.php">View Artists by Name</a>
 <br />
 <a href="/php/viewartistsbyID.php">View Artists by ID</a>
+<br />
+<a href="/php.viewartistsbyCol.php">View Artists in Collection</a>
 
 <?php
 require 'php/footer.php';
