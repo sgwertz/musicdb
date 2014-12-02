@@ -56,17 +56,9 @@ while($row = mysqli_fetch_array($result)) {
   echo "<tr>";
   echo "<td>{$row['year']}</td>";
   echo "<td>{$row['description']}</td>";
-
+  echo "<td> <a href=\"/php/addtoCol.php?releaseid={$row['id']}\"> Add to collection </a> </td>";
   echo "</tr>";
-  
-
-
-
-
 }
-
-
-
 
 require 'footer.php';
 ?>
